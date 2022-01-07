@@ -7,6 +7,7 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { heading } from "../styles/heading";
 
@@ -36,6 +37,16 @@ export default function TransactionList({ addTransaction }) {
     setTransaction({ name: "", amount: "" });
   };
 
+  const removeValue = async () => {
+    try {
+      await AsyncStorage.removeItem('@storage_Key');
+      navigation.navigate('Auth');
+    } catch(e) {
+      console.log(e)
+    }
+  
+    console.log('Done.')
+  }
   return (
     <View>
       <Text style={[heading.h4, heading.subTitle]}>Add New Transaction</Text>
@@ -66,12 +77,18 @@ export default function TransactionList({ addTransaction }) {
         <Text style={styles.btnText}>Add transaction</Text>
       </TouchableOpacity>
       <TouchableOpacity
-      style={styles.btn2}
-      onPress={(e) => {
-      navigation.navigate("Account")
-      }}
+        style={styles.btn2}
+        onPress={(e) => {
+          navigation.navigate("Account");
+        }}
       >
-      <Text style={styles.btnText}>Go To Accounts Section</Text>
+        <Text style={styles.btnText}>Go To Accounts Section</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btn3} 
+      onPress={(e) => {
+        removeValue()
+      }}>
+        <Text style={styles.btnText}>Log Out</Text>
       </TouchableOpacity>
     </View>
   );
@@ -96,6 +113,11 @@ const styles = StyleSheet.create({
   btn2: {
     marginTop: 10,
     backgroundColor: "orange",
+    padding: 9,
+  },
+  btn3: {
+    marginTop: 10,
+    backgroundColor: "red",
     padding: 9,
   },
   btnText: {

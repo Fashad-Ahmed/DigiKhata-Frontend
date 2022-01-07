@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import { heading } from "../styles/heading";
 import Transaction from "./Transaction";
@@ -30,6 +30,8 @@ export default function TransactionList({ transactions, deleteTransaction }) {
           />
         );
       })}
+
+      
     </View>
   );
 }
@@ -38,5 +40,10 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 20,
     marginBottom: 20,
+  },
+  btn: {
+    marginTop: 10,
+    backgroundColor: "#f27500",
+    padding: 9,
   },
 });

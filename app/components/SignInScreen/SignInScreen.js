@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
   ScrollView,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Navigation from "../../navigation/index";
 import Logo from "../../assets/download.png";
 import CustomButton from "../CustomButton/CustomButton";
@@ -30,6 +31,15 @@ const SignInScreen = () => {
     console.log("SIGN IN");
   }, []);
 
+  const storeData = async (value) => {
+    try {
+      await AsyncStorage.setItem("@storage_Key", value);
+      console.log(value);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const onSignInPressed = (e) => {
     const user = { email, password };
     console.log(user);
@@ -44,6 +54,8 @@ const SignInScreen = () => {
           console.log(res.result.statusCode);
           if (res.result.statusCode == 200) {
             console.log("logged In successfully");
+            console.log(res.result)
+            storeData(res.result);
             navigation.navigate("Home");
           }
         })
